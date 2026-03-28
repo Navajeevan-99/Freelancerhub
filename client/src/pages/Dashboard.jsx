@@ -193,7 +193,33 @@ export default function Dashboard() {
     </Link>
   );
 
-  if (loading) return <div style={{ textAlign: "center", padding: "4rem", color: "var(--text-muted)" }}>⏳ Loading...</div>;
+  if (loading) return (
+    <div className="page-container">
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem" }}>
+        {[1, 2, 3].map(i => (
+          <div key={i} className="glass-panel" style={{ padding: "1.5rem", textAlign: "center" }}>
+            <div className="skeleton" style={{ width: "2.5rem", height: "2.5rem", borderRadius: "50%", margin: "0 auto 0.75rem" }} />
+            <div className="skeleton" style={{ width: "60%", height: "2.5rem", margin: "0 auto 0.5rem" }} />
+            <div className="skeleton" style={{ width: "40%", height: "0.8rem", margin: "0 auto" }} />
+          </div>
+        ))}
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "0.85rem" }}>
+        {[1, 2, 3, 4].map(i => (
+          <div key={i} className="glass-panel" style={{ padding: "1.2rem" }}>
+            <div style={{ display: "flex", gap: "0.75rem", marginBottom: "0.75rem" }}>
+              <div className="skeleton" style={{ width: 52, height: 52, borderRadius: 8, flexShrink: 0 }} />
+              <div style={{ flex: 1 }}>
+                <div className="skeleton" style={{ width: "80%", height: 14, marginBottom: 8 }} />
+                <div className="skeleton" style={{ width: "50%", height: 11 }} />
+              </div>
+            </div>
+            <div className="skeleton" style={{ width: "100%", height: 34, borderRadius: 8 }} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 
   const pendingOrders = orders.filter(o => o.status === "pending");
   const activeOrders  = orders.filter(o => ["accepted","in_progress","delivered"].includes(o.status));

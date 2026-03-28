@@ -148,9 +148,25 @@ export default function Marketplace() {
         </h2>
 
         {loading ? (
-          <div style={{ textAlign: "center", padding: "3rem", color: "rgba(255,255,255,0.4)" }}>
-            <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>⏳</div>
-            Loading gigs...
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))", gap: "1.25rem" }}>
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="glass-panel" style={{ padding: 0, overflow: "hidden", borderRadius: 14 }}>
+                <div className="skeleton" style={{ width: "100%", height: 180 }} />
+                <div style={{ padding: "0.85rem", display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <div className="skeleton" style={{ width: 26, height: 26, borderRadius: "50%" }} />
+                    <div className="skeleton" style={{ width: "55%", height: 12 }} />
+                  </div>
+                  <div className="skeleton" style={{ width: "90%", height: 14 }} />
+                  <div className="skeleton" style={{ width: "60%", height: 12 }} />
+                  <div className="skeleton" style={{ width: "100%", height: 1, marginTop: 4 }} />
+                  <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <div className="skeleton" style={{ width: "40%", height: 12 }} />
+                    <div className="skeleton" style={{ width: "30%", height: 16 }} />
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         ) : gigs.length === 0 ? (
           <div className="empty-state">

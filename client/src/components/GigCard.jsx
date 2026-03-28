@@ -73,7 +73,7 @@ export default function GigCard({ gig, compact = false }) {
             alt={gig.freelancer?.name}
             style={{ width: "26px", height: "26px", borderRadius: "50%", objectFit: "cover" }}
           />
-          <span style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.7)", fontWeight: 600 }}>
+          <span style={{ fontSize: "0.78rem", color: "var(--text-muted)", fontWeight: 600 }}>
             {gig.freelancer?.name}
           </span>
         </div>
@@ -85,14 +85,14 @@ export default function GigCard({ gig, compact = false }) {
 
         {/* Rating */}
         <div style={{ display: "flex", alignItems: "center", gap: "4px", fontSize: "0.78rem", color: "#facc15" }}>
-          ★ <span style={{ color: "rgba(255,255,255,0.8)", fontWeight: 600 }}>{gig.averageRating > 0 ? gig.averageRating.toFixed(1) : "New"}</span>
-          {gig.totalReviews > 0 && <span style={{ color: "rgba(255,255,255,0.4)" }}>({gig.totalReviews})</span>}
+          ★ <span style={{ color: "var(--text-primary)", fontWeight: 600 }}>{gig.averageRating > 0 ? gig.averageRating.toFixed(1) : "New"}</span>
+          {gig.totalReviews > 0 && <span style={{ color: "var(--text-muted)" }}>({gig.totalReviews})</span>}
         </div>
 
         {/* Price */}
-        <div style={{ marginTop: "auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <span style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.5)" }}>Starting at</span>
-          <span style={{ fontSize: "1.05rem", fontWeight: 700, color: "#00f0ff" }}>
+        <div style={{ marginTop: "auto", display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "8px", borderTop: "1px solid var(--glass-border)" }}>
+          <span style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>Starting at</span>
+          <span style={{ fontSize: "1.1rem", fontWeight: 800, background: "linear-gradient(135deg, var(--accent), var(--accent-cyan))", WebkitBackgroundClip: "text", backgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             ${startingPrice}
           </span>
         </div>
