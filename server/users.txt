@@ -1,0 +1,40 @@
+Name:     Alex Rivera
+Email:    alex@example.com
+Password: password123
+Role:     freelancer
+----------------------------------------
+Name:     Sarah Chen
+Email:    sarah@example.com
+Password: password123
+Role:     freelancer
+----------------------------------------
+Name:     Michael Frost
+Email:    michael@example.com
+Password: password123
+Role:     freelancer
+----------------------------------------
+Name:     Priya Mehta
+Email:    priya@example.com
+Password: password123
+Role:     freelancer
+----------------------------------------
+Name:     Carlos Vega
+Email:    carlos@example.com
+Password: password123
+Role:     freelancer
+----------------------------------------
+Name:     Jessica Bloom
+Email:    jessica@example.com
+Password: password123
+Role:     client
+----------------------------------------
+Name:     David Miller
+Email:    david@example.com
+Password: password123
+Role:     client
+----------------------------------------
+Name:     Emily Watson
+Email:    emily@example.com
+Password: password123
+Role:     client
+----------------------------------------

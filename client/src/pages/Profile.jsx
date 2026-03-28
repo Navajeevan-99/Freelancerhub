@@ -20,6 +20,7 @@ export default function Profile() {
   const [connectionId, setConnectionId] = useState(null);
   const [works, setWorks] = useState([]);
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
+  const [uploadingCover, setUploadingCover] = useState(false);
   const [gigs, setGigs] = useState([]);
   const navigate = useNavigate();
 
@@ -39,6 +40,25 @@ export default function Profile() {
       alert("Failed to upload avatar.");
     } finally {
       setUploadingAvatar(false);
+    }
+  };
+
+  const handleCoverChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setUploadingCover(true);
+    const formData = new FormData();
+    formData.append("image", file);
+    try {
+      const { data } = await api.put("/users/profile/cover", formData, {
+        headers: { "Content-Type": "multipart/form-data" }
+      });
+      setProfile({ ...profile, coverImage: data.coverImage });
+    } catch (error) {
+      console.error(error);
+      alert("Failed to upload banner.");
+    } finally {
+      setUploadingCover(false);
     }
   };
 
@@ -124,51 +144,49 @@ export default function Profile() {
   return (
     <div className="page-container profile-page">
       <div className="profile-header glass-panel">
-        <div className="cover-photo" style={{ backgroundImage: `url(${profile.coverImage ? getImageUrl(profile.coverImage) : 'https://via.placeholder.com/1200x300?text=Cover'})` }}></div>
-        <div style={{ position: "relative", display: "inline-block" }}>
-          <img 
-            src={getAvatarUrl(profile.avatar, profile.name)} 
-            alt="Avatar" 
-            className="profile-avatar" 
-            style={{ cursor: isOwner ? "pointer" : "default", opacity: uploadingAvatar ? 0.5 : 1 }}
-            onClick={() => isOwner && document.getElementById('avatar-upload').click()}
-          />
+        <div className="cover-photo" style={{ backgroundImage: `url(${profile.coverImage ? getImageUrl(profile.coverImage) : 'https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=2000'})` }}>
           {isOwner && (
-            <input 
-              type="file" 
-              id="avatar-upload" 
-              accept="image/*" 
-              style={{ display: "none" }} 
-              onChange={handleAvatarChange} 
-            />
+            <button className="edit-cover-btn" onClick={() => document.getElementById('cover-upload').click()}>
+              📷 Edit Banner
+            </button>
           )}
+          <input type="file" id="cover-upload" hidden onChange={handleCoverChange} accept="image/*" />
         </div>
-        <div className="profile-info">
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-            <div>
-              <h1>{profile.name} <span className="badge-role">{profile.role}</span></h1>
-              <p className="bio">{profile.bio || "No professional bio available."}</p>
+        <div className="profile-top-content">
+          <div className="profile-avatar-row">
+            <div className="avatar-container">
+              <img 
+                src={getAvatarUrl(profile.avatar, profile.name)} 
+                alt="Avatar" 
+                className="profile-avatar-large" 
+                style={{ cursor: isOwner ? "pointer" : "default", opacity: uploadingAvatar ? 0.5 : 1 }}
+                onClick={() => isOwner && document.getElementById('avatar-upload').click()}
+              />
+              {isOwner && (
+                <input 
+                  type="file" 
+                  id="avatar-upload" 
+                  accept="image/*" 
+                  style={{ display: "none" }} 
+                  onChange={handleAvatarChange} 
+                />
+              )}
             </div>
-            {!isOwner && (
-              <div>
-                {connectionStatus === "none" && <button className="btn-primary" onClick={handleConnect}>Connect</button>}
-                {connectionStatus === "pending_sent" && <button className="btn-secondary" disabled>Pending</button>}
-                {connectionStatus === "pending_received" && <button className="btn-primary" onClick={handleAccept}>Accept Request</button>}
-                {connectionStatus === "connected" && <button className="btn-secondary" disabled>Connected</button>}
-              </div>
-            )}
           </div>
-          {isClientViewingFreelancer && (
-            <div className="invite-section" style={{ marginTop: "1rem" }}>
-              <select value={selectedJob} onChange={(e) => setSelectedJob(e.target.value)} style={{ padding: "0.5rem", marginRight: "0.5rem", borderRadius: "4px" }}>
-                {clientJobs.length === 0 && <option value="">No Active Jobs</option>}
-                {clientJobs.map(job => (
-                  <option key={job._id} value={job._id}>{job.title}</option>
-                ))}
-              </select>
-              <button className="btn-primary" onClick={inviteToJob} disabled={!selectedJob}>Invite to Job</button>
+          <div className="profile-info-main">
+            <div className="profile-title-row">
+              <h1>{profile.name} <span className="badge-role">{profile.role}</span></h1>
+              {!isOwner && (
+                <div className="profile-actions">
+                  {connectionStatus === "none" && <button className="btn-primary" onClick={handleConnect}>Connect</button>}
+                  {connectionStatus === "pending_sent" && <button className="btn-secondary" disabled>Pending</button>}
+                  {connectionStatus === "pending_received" && <button className="btn-primary" onClick={handleAccept}>Accept Request</button>}
+                  {connectionStatus === "connected" && <button className="btn-secondary" disabled>Connected</button>}
+                </div>
+              )}
             </div>
-          )}
+            <p className="bio">{profile.bio || "No professional bio available."}</p>
+          </div>
         </div>
       </div>
       

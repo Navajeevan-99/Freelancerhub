@@ -56,4 +56,19 @@ const uploadAvatar = async (req, res) => {
   }
 };
 
-module.exports = { getProfile, updateProfile, endorseUser, uploadAvatar };
+const uploadCover = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "No image file provided" });
+    }
+    const user = await User.findById(req.user._id);
+    const imageUrl = `http://localhost:5000/uploads/${req.file.filename}`;
+    user.coverImage = imageUrl;
+    await user.save();
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { getProfile, updateProfile, endorseUser, uploadAvatar, uploadCover };

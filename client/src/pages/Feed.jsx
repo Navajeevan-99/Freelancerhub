@@ -85,8 +85,8 @@ export default function Feed() {
   };
 
   return (
-    <div className="page-container" style={{ display: "flex", justifyContent: "center" }}>
-      <div className="feed-layout" style={{ maxWidth: "600px", width: "100%", display: "flex", flexDirection: "column", gap: "2rem" }}>
+    <div className="page-container">
+      <div className="feed-layout">
         
         {auth.user?.role === "freelancer" && (
           <div className="feed-card glass-panel flex-col" style={{ padding: "1rem", overflow: "visible" }}>
